@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mephi-heroes:jar">
+    <output-path>$USER_HOME$/Downloads/heroes-2/jars</output-path>
+    <root id="archive" name="mephi-heroes.jar">
+      <element id="module-output" name="mephi-heroes" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/heroes_task_lib-1.0-SNAPSHOT.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
