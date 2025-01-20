@@ -22,11 +22,9 @@ public class SimulateBattleImpl implements SimulateBattle {
         Set<Unit> playerUnits = new HashSet<>(playerArmy.getUnits());
         Set<Unit> computerUnits = new HashSet<>(computerArmy.getUnits());
 
-        int round = 1;
         // Пока есть живые юниты в обеих армиях
-        while (true) {
+        do {
             // Симулируем раунд
-            System.out.println("Start round " + round + " player " + playerUnits.size() + " computer " + computerUnits.size());
             Queue<Unit> player = new PriorityQueue<>(Comparator.comparingInt(Unit::getBaseAttack).reversed());
             Queue<Unit> computer = new PriorityQueue<>(Comparator.comparingInt(Unit::getBaseAttack).reversed());
 
@@ -37,38 +35,22 @@ public class SimulateBattleImpl implements SimulateBattle {
             while (true) {
                 Unit currentUnit = player.poll();
                 if (currentUnit == null || computerUnits.isEmpty()) break;
-                unitAttack(computerUnits, computer, currentUnit, true);
+                unitAttack(computerUnits, computer, currentUnit);
 
                 currentUnit = computer.poll();
                 if (currentUnit == null || playerUnits.isEmpty()) break;
-                unitAttack(playerUnits, player, currentUnit, false);
+                unitAttack(playerUnits, player, currentUnit);
             }
-            System.out.println("End round " + round);
-            if (playerUnits.isEmpty() || computerUnits.isEmpty()) break;
-            round++;
-        }
-
-        // Проверяем результат боя
-        if (computerUnits.isEmpty()) {
-            System.out.println("Player wins!");
-        } else {
-            System.out.println("Computer wins!");
-        }
+        } while (!playerUnits.isEmpty() && !computerUnits.isEmpty());
     }
 
-    private void unitAttack(Set<Unit> targetUnits, Queue<Unit> targetQueue, Unit currentUnit, boolean isPlayer) throws InterruptedException {
-        System.out.println((isPlayer ? "Player " : "Computer ") + currentUnit.getUnitType() + " run");
+    private void unitAttack(Set<Unit> targetUnits, Queue<Unit> targetQueue, Unit currentUnit) throws InterruptedException {
         // Определяем цель атаки
         Unit target = currentUnit.getProgram().attack();
         if (target != null && !target.isAlive()) {
             // Если цель атаки существует и не жива
             targetUnits.remove(target);
             targetQueue.remove(target);
-            System.out.println((isPlayer ? "Computer " : "Player ") + target.getUnitType() + " not alive");
-        } else if (target != null) {
-            System.out.println((isPlayer ? "Computer " : "Player ") + target.getUnitType() + " health " + target.getHealth());
-        } else {
-            System.out.println("Empty target!!!!!");
         }
         // Логируем атаку
         printBattleLog.printBattleLog(currentUnit, target);

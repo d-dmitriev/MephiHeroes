@@ -14,7 +14,6 @@ public class GeneratePresetImpl implements GeneratePreset {
     // Общая сложность O(n log n) + O(m) + O(m) = O(n log n) + O(m)
     @Override
     public Army generate(List<Unit> unitList, int maxPoints) {
-        System.out.println("Start generating");
         // Размер позиций для установки юнитов
         final int WIDTH = 3, HEIGHT = 21;
         // Максимальное число юнитов одного типа
@@ -57,18 +56,15 @@ public class GeneratePresetImpl implements GeneratePreset {
                     new HashMap<>(unit.getDefenceBonuses()),
                     coordinates[i].x(),
                     coordinates[i].y());
-            System.out.println(newUnit.getName() + " x:" + newUnit.getxCoordinate() + " y:" + newUnit.getyCoordinate());
             // Добавляем в массив
             selectedUnits.add(newUnit);
             // Накапливаем поинты
             currentPoints += newUnit.getCost();
         }
-        System.out.println("Used " + currentPoints + " limit " + maxPoints);
         // Создаем новый объект армии
         Army computerArmy = new Army(selectedUnits);
         // Устанавливаем очки в армию ?
         computerArmy.setPoints(currentPoints);
-        System.out.println("Finish generating");
         return computerArmy;
     }
 }
