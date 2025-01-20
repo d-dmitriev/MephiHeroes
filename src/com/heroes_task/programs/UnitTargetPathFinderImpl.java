@@ -8,7 +8,7 @@ import com.heroes_task.records.Coordinates;
 import java.util.*;
 
 // Инициализация занятых клеток: O(U)
-// Алгоритм: O(W * H * log(W * H))
+// Алгоритм нахождения кратчайшего пути: O(W * H * log(W * H))
 // Построение пути: O(W * H)
 // Общая сложность: O(U)+O(W*H*log(W*H))+O(W*H)=O(W*H*log(W*H))
 
